@@ -1,7 +1,8 @@
-const DoubtRequest = require('../models/doubtRequest');
-const User = require('../models/user');
-const Tutor = require('../models/tutor');
+const DoubtRequest = require('../models/doubt.model');
+const User = require('../models/user.model');
+const Tutor = require('../models/tutor.model');
 const MailService = require('../services/mailService'); // Import MailService
+const { where } = require('sequelize');
 
 const DoubtController = {};
 
@@ -10,18 +11,18 @@ DoubtController.createDoubtRequest = async (req, res) => {
 
   try {
     // Check if the user exists and is a student
-    const student = await User.findOne({ _id: userId, type: 'Student' });
+    const student = await User.findOne({where:{ _id: userId, type: 'Student' }});
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
 
     // Find online tutors matching the subject, language, and classGrade
-    const onlineTutors = await Tutor.find({
+    const onlineTutors = await Tutor.find({where:{
       availability: true,
       subjects: subject,
       language: student.language,
       classGrade: student.classGrade,
-    });
+    }});
 
     // If there are no online tutors, provide feedback to the student
     if (onlineTutors.length === 0) {
@@ -60,13 +61,13 @@ DoubtController.getDoubtHistory = async (req, res) => {
 
   try {
     // Check if the user exists and is a student
-    const student = await User.findOne({ _id: userId, type: 'Student' });
+    const student = await User.findOne({where:{ _id: userId, type: 'Student' }});
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
 
     // Retrieve doubt history for the student
-    const doubtHistory = await DoubtRequest.find({ studentId: userId }).sort({ createdAt: -1 });
+    const doubtHistory = await DoubtRequest.find({where:{ studentId: userId }}).sort({ createdAt: -1 });
 
     // Provide success response
     return res.json({ message: 'Doubt history retrieved successfully', doubtHistory });

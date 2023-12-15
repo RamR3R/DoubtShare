@@ -6,7 +6,7 @@ PollingController.updateTutorPing = async (req, res) => {
   const { tutorId } = req.body;
 
   try {
-    const tutor = await Tutor.findById(tutorId);
+    const tutor = await Tutor.findOne({where:{id:tutorId}});
     if (!tutor) {
       return res.status(404).json({ message: 'Tutor not found' });
     }

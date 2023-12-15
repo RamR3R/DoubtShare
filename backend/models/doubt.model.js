@@ -1,17 +1,16 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // Path to your db.js file
+const sequelize = require('../db'); 
 const User = require('./user.model'); 
 const Tutor = require('./tutor.model');
 
 const Doubt = sequelize.define('Doubt', {
   studentId: {
-    type: DataTypes.INTEGER, // Assuming studentId is an integer
+    type: DataTypes.INTEGER, 
     allowNull: false,
-    // Define foreign key constraint if necessary
-    references: {
-      model: 'User', // Name of the referenced model (User in this case)
-      key: 'id', // Name of the referenced key (id in the User model)
-    },
+    // references: {
+    //   model: 'User', 
+    //   key: 'id', 
+    // },
   },
   subject: {
     type: DataTypes.STRING,
@@ -22,16 +21,17 @@ const Doubt = sequelize.define('Doubt', {
     allowNull: false,
   },
   assignedTutorId: {
-    type: DataTypes.INTEGER, // Assuming assignedTutorId is an integer
-    // Define foreign key constraint if necessary
-    references: {
-      model: 'Tutor', // Name of the referenced model (Tutor in this case)
-      key: 'id', // Name of the referenced key (id in the Tutor model)
-    },
+    type: DataTypes.INTEGER, 
+    // references: {
+    //   model: 'Tutor', 
+    //   key: 'id', 
+    // },
   },
 }, { timestamps: true });
 
-Doubt.belongsTo(User, { through: 'studentId' });
-Doubt.belongsTo(Tutor, { through: 'assignedTutorId'});
+// User.hasMany(Doubt , { foreignKey: 'studentId' });
+// Tutor.hasMany(Doubt , { foreignKey: 'assignedTutorId'});
+// Doubt.belongsTo(User, { foreignKey: 'studentId' });
+// Doubt.belongsTo(Tutor, { foreignKey: 'assignedTutorId'});
 
 module.exports = Doubt;

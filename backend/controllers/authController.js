@@ -1,5 +1,5 @@
-const User = require('../models/user');
-const Tutor = require('../models/tutor');
+const User = require('../models/user.model');
+const Tutor = require('../models/tutor.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -15,8 +15,8 @@ AuthController.login = async (req, res) => {
 
   try {
     // Find user by email
-    const user = await User.findOne({ email });
-    const tutor = await Tutor.findOne({ email });
+    const user = await User.findOne({ where:{email : email}});
+    const tutor = await Tutor.findOne({ where:{email : email}});
 
     if (!user && !tutor) {
       return res.status(401).json({ message: 'Invalid email or password' });
@@ -39,7 +39,7 @@ AuthController.login = async (req, res) => {
 };
 AuthController.getStudent =async(req,res)=>{ 
   try {
-    const students = await User.find();
+    const students = await User.findAll();
     res.status(200).json(students);
 } catch (error) {
     console.error(error);
@@ -56,8 +56,8 @@ AuthController.register = async (req, res) => {
 
   try {
     // Check for existing user or tutor
-    const existingUser = await User.findOne({ email });
-    const existingTutor = await Tutor.findOne({ email });
+    const existingUser = await User.findOne({ where:{email : email}});
+    const existingTutor = await Tutor.findOne({ where:{email : email}});
 
     if (existingUser || existingTutor) {
       return res.status(409).json({ message: 'Email already exists' });
@@ -92,8 +92,8 @@ AuthController.registerTutor = async (req, res) => {
 
   try {
     // Check for existing tutor or user
-    const existingTutor = await Tutor.findOne({ email });
-    const existingUser = await User.findOne({ email });
+    const existingTutor = await Tutor.findOne({ where:{email : email}});
+    const existingUser = await User.findOne({ where:{email : email}});
 
     if (existingTutor || existingUser) {
       return res.status(409).json({ message: 'Tutor already exists' });

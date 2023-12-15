@@ -6,7 +6,6 @@ const TutorOnline = require('./models/tutorOnline.model');
 const Doubt = require('./models/doubt.model');
 const app = express()
 require("dotenv").config();
-const { connection } = require('./config/db');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const mongoose = require('mongoose');
