@@ -1,8 +1,11 @@
 const { Sequelize } = require('sequelize');
 require("dotenv").config();
 
-const sequelize = new Sequelize(process.env.db, process.env.user, process.env.password, {
-  host: '127.0.0.1', // Change this to your PostgreSQL server
+const sequelize = new Sequelize({
+  host: 'localhost',
+  username: 'root',
+  password: 'Srvv@1212',
+  database: 'doubtshare',
   dialect: 'mysql'
 });
 

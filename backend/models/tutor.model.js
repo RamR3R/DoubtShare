@@ -34,7 +34,7 @@ const Tutor = sequelize.define('Tutor', {
   },
 });
 
-Tutor.hasMany(Doubt, { foreignKey: 'assignedTutorId', as:'AssignedDoubt'});
+// Tutor.hasMany(Doubt, { foreignKey: 'assignedTutorId', as:'AssignedDoubt'});
 
 
 module.exports = Tutor;

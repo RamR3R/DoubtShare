@@ -31,7 +31,7 @@ const Doubt = sequelize.define('Doubt', {
   },
 }, { timestamps: true });
 
-Doubt.belongsTo(User, { as: 'Student', foreignKey: 'id' });
-Doubt.belongsTo(Tutor, { as: 'AssignedTutor', foreignKey: 'id'});
+Doubt.belongsTo(User, { through: 'studentId' });
+Doubt.belongsTo(Tutor, { through: 'assignedTutorId'});
 
 module.exports = Doubt;

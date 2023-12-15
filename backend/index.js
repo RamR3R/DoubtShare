@@ -6,12 +6,19 @@ const TutorOnline = require('./models/tutorOnline.model');
 const Doubt = require('./models/doubt.model');
 const app = express()
 require("dotenv").config();
+const { connection } = require('./config/db');
+const bodyParser = require('body-parser');
+const routes = require('./routes');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
 
 
-app.get("/",(req,res)=>{
-    res.status(200).json({message:"Welcome to the DoubtShare app Backend"})
-})
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', routes);
+
 
 app.listen(process.env.PORT, async() => {
     try 
